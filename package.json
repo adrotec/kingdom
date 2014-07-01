@@ -1,7 +1,7 @@
 {
   "name": "KingdomJS",
   "version": "0.1.0",
-  "description": "An opinionated, convention over Configuration Framework for Javascript cross platform application development",
+  "description": "An opinionated, Convention over Configuration framework for HTML5 application development",
   "dependencies": {
   },
   "devDependencies": {

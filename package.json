@@ -1,0 +1,15 @@
+{
+  "name": "KingdomJS",
+  "version": "0.1.0",
+  "description": "An opinionated, convention over Configuration Framework for Javascript cross platform application development",
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "author": {
+    "name": "Muhammad Safraz Razik",
+    "email": "mr.safraz@gmail.com"
+  },
+  "contributers": [],
+  "license": "MIT"
+}

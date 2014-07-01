@@ -1,0 +1,14 @@
+{
+  "name": "KingdomJS",
+  "version": "0.1.0",
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "authors": [
+    {
+      "name": "Muhammad Safraz Razik",
+      "email": "mr.safraz@gmail.com"
+    }
+  ]
+}

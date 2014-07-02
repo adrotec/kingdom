@@ -1,10 +1,16 @@
 {
-  "name": "KingdomJS",
+  "name": "kingdom",
   "version": "0.1.0",
   "description": "An opinionated, Convention over Configuration framework for HTML5 application development",
   "dependencies": {
     "durandal": "~2.1.0"
   },
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "devDependencies": {},
   "authors": [
     {

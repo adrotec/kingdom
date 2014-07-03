@@ -1,4 +1,15 @@
+var routePrefix = 'app/';
+
 export class RouteBuilder {
+
+  static getRoutePrefix(){
+    return routePrefix;
+  }
+
+  static setRoutePrefix(prefix){
+    routePrefix = prefix;
+  }
+
   static buildRouteConfig(route){
     if(typeof route === "string"){
       route = {route: route};
@@ -25,6 +36,9 @@ export class RouteBuilder {
     }
     route.moduleId = route.moduleId.replace('*details', '');
     route.moduleId = route.moduleId + '/' + route.moduleId;
+    if(routePrefix){
+      route.moduleId = routePrefix + route.moduleId;
+    }
 
     return route;
   }

@@ -1,6 +1,8 @@
 import system from 'durandal/system';
 import app from 'durandal/app';
 import {ModuleLoader} from 'kingdom';
+import ko from 'knockout';
+import koPunches from 'durandal-punches';
 
 export class Application {
   constructor(config){
@@ -16,8 +18,12 @@ export class Application {
       observable: true,
     });
   }
+  bootstrap(){
+    ko.punches.enableAll();
+  }
   run(){
     this.init();
+    this.bootstrap();
     return app.start().then(function() {
       app.setRoot('app', 'entrance');
     });

@@ -1,6 +1,7 @@
 import system from 'durandal/system';
 import app from 'durandal/app';
 import {ModuleLoader} from './ModuleLoader';
+import {RouteBuilder} from './RouteBuilder';
 import ko from 'knockout';
 import koPunches from 'durandal-punches';
 
@@ -25,7 +26,7 @@ export class Application {
     this.init();
     this.bootstrap();
     return app.start().then(function() {
-      app.setRoot('app', 'entrance');
+      app.setRoot(RouteBuilder.getRoutePrefix() + 'app', 'entrance');
     });
   }
 }

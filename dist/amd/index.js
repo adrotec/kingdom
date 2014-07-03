@@ -1,4 +1,4 @@
-define(['knockout', 'durandal-punches', './Module', './ModuleLoader', './RouteBuilder'], function($__0,$__1,$__2,$__3,$__4) {
+define(['./Module', './ModuleLoader', './RouteBuilder', './Application'], function($__0,$__1,$__2,$__3) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
     $__0 = {'default': $__0};
@@ -8,14 +8,10 @@ define(['knockout', 'durandal-punches', './Module', './ModuleLoader', './RouteBu
     $__2 = {'default': $__2};
   if (!$__3 || !$__3.__esModule)
     $__3 = {'default': $__3};
-  if (!$__4 || !$__4.__esModule)
-    $__4 = {'default': $__4};
-  var ko = $traceurRuntime.assertObject($__0).default;
-  var koPunches = $traceurRuntime.assertObject($__1).default;
-  ko.punches.enableAll();
-  var $__Module__ = $__2;
-  var $__ModuleLoader__ = $__3;
-  var $__RouteBuilder__ = $__4;
+  var $__Module__ = $__0;
+  var $__ModuleLoader__ = $__1;
+  var $__RouteBuilder__ = $__2;
+  var $__Application__ = $__3;
   return {
     get Module() {
       return $__Module__.Module;
@@ -28,6 +24,9 @@ define(['knockout', 'durandal-punches', './Module', './ModuleLoader', './RouteBu
     },
     get RouteBuilder() {
       return $__RouteBuilder__.RouteBuilder;
+    },
+    get Application() {
+      return $__Application__.Application;
     },
     __esModule: true
   };

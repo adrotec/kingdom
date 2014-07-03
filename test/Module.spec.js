@@ -1,4 +1,4 @@
-import {Module, RootModule} from 'kingdom';
+import {Module, RootModule, RouteBuilder} from 'kingdom';
 
 describe('Modules', function(){
   it('should expose navigation for {nav: true} only', () => {
@@ -19,7 +19,7 @@ describe('Modules', function(){
     app.registerRoutes();
     expect(app.navigation.length).toBe(3);
     expect(app.navigation[1].href).toBe('#hello');
-    expect(app.navigation[1].moduleId).toBe('hello/hello');
+    expect(app.navigation[1].moduleId).toBe(RouteBuilder.getRoutePrefix() + 'hello/hello');
     expect(app.navigation[1].isActive()).toBe(false);
   });
 });

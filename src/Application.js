@@ -1,6 +1,6 @@
 import system from 'durandal/system';
 import app from 'durandal/app';
-import {ModuleLoader} from 'kingdom';
+import {ModuleLoader} from './ModuleLoader';
 import ko from 'knockout';
 import koPunches from 'durandal-punches';
 

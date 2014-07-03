@@ -1,4 +1,4 @@
-define(['durandal/system', 'durandal/app', 'kingdom', 'knockout', 'durandal-punches'], function($__0,$__1,$__2,$__3,$__4) {
+define(['durandal/system', 'durandal/app', './ModuleLoader', 'knockout', 'durandal-punches'], function($__0,$__1,$__2,$__3,$__4) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
     $__0 = {'default': $__0};

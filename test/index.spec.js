@@ -7,5 +7,6 @@ describe('exports', function(){
     expect(kingdom.RootModule).toBeDefined();
     expect(kingdom.ModuleLoader).toBeDefined();
     expect(kingdom.RouteBuilder).toBeDefined();
+    expect(kingdom.Application).toBeDefined();
   });
 });

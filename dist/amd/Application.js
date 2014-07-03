@@ -1,4 +1,4 @@
-define(['durandal/system', 'durandal/app', './ModuleLoader', 'knockout', 'durandal-punches'], function($__0,$__1,$__2,$__3,$__4) {
+define(['durandal/system', 'durandal/app', './ModuleLoader', './RouteBuilder', 'knockout', 'durandal-punches'], function($__0,$__1,$__2,$__3,$__4,$__5) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
     $__0 = {'default': $__0};
@@ -10,11 +10,14 @@ define(['durandal/system', 'durandal/app', './ModuleLoader', 'knockout', 'durand
     $__3 = {'default': $__3};
   if (!$__4 || !$__4.__esModule)
     $__4 = {'default': $__4};
+  if (!$__5 || !$__5.__esModule)
+    $__5 = {'default': $__5};
   var system = $traceurRuntime.assertObject($__0).default;
   var app = $traceurRuntime.assertObject($__1).default;
   var ModuleLoader = $traceurRuntime.assertObject($__2).ModuleLoader;
-  var ko = $traceurRuntime.assertObject($__3).default;
-  var koPunches = $traceurRuntime.assertObject($__4).default;
+  var RouteBuilder = $traceurRuntime.assertObject($__3).RouteBuilder;
+  var ko = $traceurRuntime.assertObject($__4).default;
+  var koPunches = $traceurRuntime.assertObject($__5).default;
   var Application = function Application(config) {
     this.config = config || {};
   };
@@ -36,7 +39,7 @@ define(['durandal/system', 'durandal/app', './ModuleLoader', 'knockout', 'durand
       this.init();
       this.bootstrap();
       return app.start().then(function() {
-        app.setRoot('app', 'entrance');
+        app.setRoot(RouteBuilder.getRoutePrefix() + 'app', 'entrance');
       });
     }
   }, {});

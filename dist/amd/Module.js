@@ -46,12 +46,13 @@ define(['plugins/router', './RouteBuilder', 'knockout'], function($__0,$__1,$__2
       return router;
     },
     buildRoutes: function(routes) {
+      var includeRoutePrefix = arguments[1] !== (void 0) ? arguments[1] : false;
       var preparedRoutes = [];
       for (var $__4 = routes[Symbol.iterator](),
           $__5; !($__5 = $__4.next()).done; ) {
         var route = $__5.value;
         {
-          route = RouteBuilder.buildRouteConfig(route);
+          route = RouteBuilder.buildRouteConfig(route, includeRoutePrefix);
           preparedRoutes.push(route);
         }
       }
@@ -85,6 +86,10 @@ define(['plugins/router', './RouteBuilder', 'knockout'], function($__0,$__1,$__2
     },
     findRouter: function(baseId) {
       return $traceurRuntime.superCall(this, $RootModule.prototype, "findRouter", [false]);
+    },
+    buildRoutes: function(routes) {
+      var includeRoutePrefix = arguments[1] !== (void 0) ? arguments[1] : true;
+      return $traceurRuntime.superCall(this, $RootModule.prototype, "buildRoutes", [routes, includeRoutePrefix]);
     },
     activate: function() {
       return this.router.activate();

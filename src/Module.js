@@ -44,10 +44,10 @@ export class Module {
     return router;
   }
 
-  buildRoutes(routes) {
+  buildRoutes(routes, includeRoutePrefix = false) {
     var preparedRoutes = [];
     for(var route of routes) {
-      route = RouteBuilder.buildRouteConfig(route);
+      route = RouteBuilder.buildRouteConfig(route, includeRoutePrefix);
       preparedRoutes.push(route);
     }
     return preparedRoutes;
@@ -81,6 +81,10 @@ export class RootModule extends Module {
 
   findRouter(baseId){
     return super.findRouter(false);
+  }
+
+  buildRoutes(routes, includeRoutePrefix = true) {
+    return super.buildRoutes(routes, includeRoutePrefix);
   }
 
   activate(){

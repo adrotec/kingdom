@@ -10,6 +10,7 @@ define([], function() {
       routePrefix = prefix;
     },
     buildRouteConfig: function(route) {
+      var includeRoutePrefix = arguments[1] !== (void 0) ? arguments[1] : false;
       if (typeof route === "string") {
         route = {route: route};
       }
@@ -31,7 +32,7 @@ define([], function() {
       }
       route.moduleId = route.moduleId.replace('*details', '');
       route.moduleId = route.moduleId + '/' + route.moduleId;
-      if (routePrefix) {
+      if (includeRoutePrefix && routePrefix) {
         route.moduleId = routePrefix + route.moduleId;
       }
       return route;

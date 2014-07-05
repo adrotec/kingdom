@@ -10,7 +10,7 @@ export class RouteBuilder {
     routePrefix = prefix;
   }
 
-  static buildRouteConfig(route){
+  static buildRouteConfig(route, includeRoutePrefix = false){
     if(typeof route === "string"){
       route = {route: route};
     }
@@ -36,7 +36,7 @@ export class RouteBuilder {
     }
     route.moduleId = route.moduleId.replace('*details', '');
     route.moduleId = route.moduleId + '/' + route.moduleId;
-    if(routePrefix){
+    if(includeRoutePrefix && routePrefix){
       route.moduleId = routePrefix + route.moduleId;
     }
 

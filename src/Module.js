@@ -64,7 +64,7 @@ export class Module {
     var _router = cachedRouters[cacheId];
     if(!_router && this.routes){
       _router = this.findRouter(baseId);
-      _router.map(this.buildRoutes(this.routes, baseId)).buildNavigationModel();
+      _router.map(this.buildRoutes(this.routes)).buildNavigationModel();
       if(baseId){
         cachedRouters[cacheId] = _router;
       }

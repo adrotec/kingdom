@@ -19,6 +19,9 @@
     "name": "Muhammad Safraz Razik",
     "email": "mr.safraz@gmail.com"
   },
-  "contributers": [],
+  "repository" : {
+    "type": "git",
+    "url": "http://github.com/adrotec/kingdom.git"
+  },
   "license": "MIT"
 }

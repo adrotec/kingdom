@@ -10,6 +10,19 @@ define(['di', './Module'], function($__0,$__1) {
   var isFunction = function(param) {
     return param instanceof Function;
   };
+  function _loadModule(module) {
+    var dummyInstance;
+    try {
+      dummyInstance = new module();
+    } catch (e) {}
+    if (dummyInstance instanceof Module) {
+      module = moduleInjector.get(module);
+    } else {
+      var injector = new Injector();
+      module = injector.get(module);
+    }
+    return module;
+  }
   var ModuleLoader = function ModuleLoader() {};
   ($traceurRuntime.createClass)(ModuleLoader, {}, {
     get injector() {
@@ -21,22 +34,13 @@ define(['di', './Module'], function($__0,$__1) {
         module = module['default'];
         module.__moduleId__ = moduleId;
         if (isFunction(module)) {
-          var dummyInstance;
-          try {
-            dummyInstance = new module();
-          } catch (e) {}
-          if (dummyInstance instanceof Module) {
-            module = moduleInjector.get(module);
-          } else {
-            var injector = new Injector();
-            module = injector.get(module);
-          }
+          module = _loadModule(module);
           module.__moduleId__ = moduleId;
         }
         return module;
       } else {
         if (isFunction(module)) {
-          module = new module();
+          module = _loadModule(module);
           return module;
         } else {
           return module;

@@ -2,21 +2,29 @@ import {ModuleLoader, Module, RootModule} from 'kingdom';
 
 describe('ModuleLoader', function(){
 
-  it('loads ES6 classes', () => {
-    class App {
-      constructor(){
-        this.text = 'hi';
-      }
+  class App {
+    constructor(){
+      this.text = 'hi';
     }
+  }
+  
+  it('should load ES6 modules', () => {
     var _module = {
      'default': App,
      '__esModule': true,
     };
     var app = ModuleLoader.loadModule(_module);
     expect(app instanceof App).toBe(true);
+    expect(app.text).toBe('hi');
   });
 
-  it('loads objects', () => {
+  it('should load ES6 classes', () => {
+    var app = ModuleLoader.loadModule(App);
+    expect(app instanceof App).toBe(true);
+    expect(app.text).toBe('hi');
+  });
+
+  it('should load objects', () => {
     var obj = {};
     var app = ModuleLoader.loadModule(obj);
     var app2 = ModuleLoader.loadModule(obj);
@@ -35,8 +43,10 @@ describe('ModuleLoader', function(){
     };
     var app = ModuleLoader.loadModule(_module);
     var app2 = ModuleLoader.loadModule(_module);
+    var app3 = ModuleLoader.loadModule(App);
     expect(app instanceof App).toBe(true);
     expect(app).toBe(app2);
+    expect(app2).toBe(app3);
   });
 
 });

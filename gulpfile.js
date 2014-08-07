@@ -11,7 +11,8 @@ var traceurOpts = {
   types: true,
   annotations: true,
   typeAssertions: true,
-  typeAssertionModule: 'assert'
+  typeAssertionModule: 'assert',
+  experimental: true,
 };
 
 gulp.task('build_source', function() {

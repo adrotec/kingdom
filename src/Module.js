@@ -2,9 +2,31 @@ import router from 'plugins/router';
 import {RouteBuilder} from './RouteBuilder';
 import ko from 'knockout';
 
+import app from 'durandal/app';
+
 var cachedRouters = {};
 
 export class Module {
+
+
+  showModal(moduleId, activationData){
+    var idSplit = moduleId.split('/');
+    idSplit.push('' + idSplit[idSplit.length-1]);
+    var moduleIdReal = idSplit.join('/');
+    moduleIdReal = this.__moduleBaseId__ + '/' + moduleIdReal;
+    return app.showModal(moduleIdReal, activationData);
+    // alert(moduleIdReal);
+  }
+
+  get __moduleBaseId__(){
+    var idSplit = this.__moduleId__.split('/');
+    if(idSplit.length > 1 && idSplit[idSplit.length - 1]
+       === idSplit[idSplit.length - 2]){
+      idSplit.pop();
+    }
+    var baseId = idSplit.join('/');
+    return baseId;
+  }
 
 	canActivate(){
 		this.registerRoutes();

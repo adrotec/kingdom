@@ -66,7 +66,7 @@ export class DataService {
     if(results.length){
       return singleResult ? results[0] : results;
     }
-    return false;
+    return null;
   }
 
   findResultsByQueryNEW(query: EntityQuery, localFirst: boolean = true, singleResult: boolean = false): Promise {

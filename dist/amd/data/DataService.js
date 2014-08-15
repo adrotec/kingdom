@@ -93,7 +93,7 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
       if (results.length) {
         return singleResult ? results[0] : results;
       }
-      return false;
+      return null;
     },
     findResultsByQueryNEW: function(query) {
       var localFirst = arguments[1] !== (void 0) ? arguments[1] : true;

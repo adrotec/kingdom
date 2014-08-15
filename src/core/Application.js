@@ -4,7 +4,7 @@ import {ModuleLoader} from './ModuleLoader';
 import {RouteBuilder} from './RouteBuilder';
 import ko from 'knockout';
 import koPunches from 'durandal-punches';
-import {Authenticator} from './security/Authenticator';
+import {Authenticator} from './../security/Authenticator';
 
 export class Application {
 

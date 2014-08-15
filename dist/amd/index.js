@@ -1,4 +1,4 @@
-define(['./Module', './ModuleLoader', './RouteBuilder', './Application', './security/AuthenticationProviderInterface', './security/Authenticator', './data/Entity', './data/DataService', './data/EntityInitializer', './data/Preloader', './data/Storage', './ui/Dialog'], function($__0,$__1,$__2,$__3,$__4,$__5,$__6,$__7,$__8,$__9,$__10,$__11) {
+define(['./core/Module', './core/ModuleLoader', './core/RouteBuilder', './core/Application', './core/Observer', './core/ConfigInterface', './core/Filter', './security/AuthenticationProviderInterface', './security/Authenticator', './data/Entity', './data/DataService', './data/EntityInitializer', './data/Preloader', './data/Storage', './ui/MessageBox', './ui/Toast', './ui/Dialog'], function($__0,$__1,$__2,$__3,$__4,$__5,$__6,$__7,$__8,$__9,$__10,$__11,$__12,$__13,$__14,$__15,$__16) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
     $__0 = {'default': $__0};
@@ -24,33 +24,57 @@ define(['./Module', './ModuleLoader', './RouteBuilder', './Application', './secu
     $__10 = {'default': $__10};
   if (!$__11 || !$__11.__esModule)
     $__11 = {'default': $__11};
-  var $__Module__ = $__0;
-  var $__ModuleLoader__ = $__1;
-  var $__RouteBuilder__ = $__2;
-  var $__Application__ = $__3;
-  var $__security_47_AuthenticationProviderInterface__ = $__4;
-  var $__security_47_Authenticator__ = $__5;
-  var $__data_47_Entity__ = $__6;
-  var $__data_47_DataService__ = $__7;
-  var $__data_47_EntityInitializer__ = $__8;
-  var $__data_47_Preloader__ = $__9;
-  var $__data_47_Storage__ = $__10;
-  var $__ui_47_Dialog__ = $__11;
+  if (!$__12 || !$__12.__esModule)
+    $__12 = {'default': $__12};
+  if (!$__13 || !$__13.__esModule)
+    $__13 = {'default': $__13};
+  if (!$__14 || !$__14.__esModule)
+    $__14 = {'default': $__14};
+  if (!$__15 || !$__15.__esModule)
+    $__15 = {'default': $__15};
+  if (!$__16 || !$__16.__esModule)
+    $__16 = {'default': $__16};
+  var $__core_47_Module__ = $__0;
+  var $__core_47_ModuleLoader__ = $__1;
+  var $__core_47_RouteBuilder__ = $__2;
+  var $__core_47_Application__ = $__3;
+  var $__core_47_Observer__ = $__4;
+  var $__core_47_ConfigInterface__ = $__5;
+  var $__core_47_Filter__ = $__6;
+  var $__security_47_AuthenticationProviderInterface__ = $__7;
+  var $__security_47_Authenticator__ = $__8;
+  var $__data_47_Entity__ = $__9;
+  var $__data_47_DataService__ = $__10;
+  var $__data_47_EntityInitializer__ = $__11;
+  var $__data_47_Preloader__ = $__12;
+  var $__data_47_Storage__ = $__13;
+  var $__ui_47_MessageBox__ = $__14;
+  var $__ui_47_Toast__ = $__15;
+  var $__ui_47_Dialog__ = $__16;
   return {
     get Module() {
-      return $__Module__.Module;
+      return $__core_47_Module__.Module;
     },
     get RootModule() {
-      return $__Module__.RootModule;
+      return $__core_47_Module__.RootModule;
     },
     get ModuleLoader() {
-      return $__ModuleLoader__.ModuleLoader;
+      return $__core_47_ModuleLoader__.ModuleLoader;
     },
     get RouteBuilder() {
-      return $__RouteBuilder__.RouteBuilder;
+      return $__core_47_RouteBuilder__.RouteBuilder;
     },
     get Application() {
-      return $__Application__.Application;
+      return $__core_47_Application__.Application;
+    },
+    get Observer() {
+      return $__core_47_Observer__.Observer;
+    },
+    get ConfigInterface() {
+      return $__core_47_ConfigInterface__.ConfigInterface;
+    },
+    get Filter() {
+      return $__core_47_Filter__.Filter;
     },
     get AuthenticationProviderInterface() {
       return $__security_47_AuthenticationProviderInterface__.AuthenticationProviderInterface;
@@ -72,6 +96,12 @@ define(['./Module', './ModuleLoader', './RouteBuilder', './Application', './secu
     },
     get Storage() {
       return $__data_47_Storage__.Storage;
+    },
+    get MessageBox() {
+      return $__ui_47_MessageBox__.MessageBox;
+    },
+    get Toast() {
+      return $__ui_47_Toast__.Toast;
     },
     get Dialog() {
       return $__ui_47_Dialog__.Dialog;

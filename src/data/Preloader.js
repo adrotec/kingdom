@@ -161,6 +161,9 @@ export class Preloader {
         this.logger.log('PRELOAD: Fetched ' + resourceName);
         fetched[resourceName] = true;
         tryToResolve.apply(this);
+      }, (error)=> {
+        console.log('PRELOAD: NOT FETCHED ' + resourceName); 
+        console.error(error);
       });
     }
 

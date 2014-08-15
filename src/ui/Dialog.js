@@ -2,9 +2,9 @@ import app from 'durandal/app';
 import dialog from 'plugins/dialog';
 
 export class Dialog {
-  show(view, activationData){
-    app.showModal(view, activationData);
-  }
+//  show(view, activationData){
+//    app.showModal(view, activationData);
+//  }
   // close(...params){
   //   dialog.close(...params); 
   // }
@@ -12,7 +12,12 @@ export class Dialog {
 
   }
 
+  // DEPRECATED
   open(...params){
+    return this.show(...params);
+  }
+
+  show(...params){
     return app.showModal(this, params);
     // alert('Wait up!');
   }

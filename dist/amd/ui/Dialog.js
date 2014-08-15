@@ -8,14 +8,18 @@ define(['durandal/app', 'plugins/dialog'], function($__0,$__1) {
   var dialog = $traceurRuntime.assertObject($__1).default;
   var Dialog = function Dialog() {};
   ($traceurRuntime.createClass)(Dialog, {
-    show: function(view, activationData) {
-      app.showModal(view, activationData);
-    },
     closeAll: function() {},
     open: function() {
+      var $__6;
       for (var params = [],
           $__3 = 0; $__3 < arguments.length; $__3++)
         $traceurRuntime.setProperty(params, $__3, arguments[$traceurRuntime.toProperty($__3)]);
+      return ($__6 = this).show.apply($__6, $traceurRuntime.toObject(params));
+    },
+    show: function() {
+      for (var params = [],
+          $__4 = 0; $__4 < arguments.length; $__4++)
+        $traceurRuntime.setProperty(params, $__4, arguments[$traceurRuntime.toProperty($__4)]);
       return app.showModal(this, params);
     },
     close: function(result) {

@@ -161,6 +161,9 @@ define(["assert", './DataService', 'prophecy', './Storage', '../util/Logger', 'p
               $__6.logger.log('PRELOAD: Fetched ' + resourceName);
               $traceurRuntime.setProperty(fetched, resourceName, true);
               tryToResolve.apply($__6);
+            }), (function(error) {
+              console.log('PRELOAD: NOT FETCHED ' + resourceName);
+              console.error(error);
             }));
           }
         }

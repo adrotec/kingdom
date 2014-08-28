@@ -1,4 +1,4 @@
-define(["assert", 'durandal/system', 'durandal/binder', 'durandal/app', './ModuleLoader', './RouteBuilder', 'knockout', 'durandal-punches', './../security/Authenticator', '../ui/Widget'], function($__0,$__1,$__2,$__3,$__4,$__5,$__6,$__7,$__8,$__9) {
+define(["assert", 'durandal/system', 'durandal/binder', 'durandal/app', './ModuleLoader', './RouteBuilder', 'knockout', 'kingdom-punches', './../security/Authenticator', '../ui/Widget'], function($__0,$__1,$__2,$__3,$__4,$__5,$__6,$__7,$__8,$__9) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
     $__0 = {'default': $__0};

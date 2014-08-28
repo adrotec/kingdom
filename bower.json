@@ -4,7 +4,7 @@
   "description": "An opinionated, Convention over Configuration framework for HTML5 application development",
   "dependencies": {
     "durandal": "~2.1.0",
-    "durandal-punches": "mrsafraz/durandal-punches#master"
+    "kingdom-punches": "adrotec/kingdom-punches#master"
   },
   "ignore": [
     "node_modules",

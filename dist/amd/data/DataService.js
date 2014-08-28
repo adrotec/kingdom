@@ -68,7 +68,14 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
     getAll: function(from, criteria) {
       var options = arguments[2] !== (void 0) ? arguments[2] : {};
       var query = sugar.createQuery(from, criteria, options);
-      return this.getResults(query, false);
+      var results = this.getResults(query, false);
+      if (options.count) {
+        var countOptions = {sort: options.sort};
+        var countQuery = sugar.createQuery(from, criteria, countOptions);
+        var allResults = this.getResults(countQuery, false);
+        results.count = allResults.length;
+      }
+      return results;
     },
     getOne: function(from, criteria) {
       var options = arguments[2] !== (void 0) ? arguments[2] : {};
@@ -90,10 +97,7 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
       var singleResult = arguments[1] !== (void 0) ? arguments[1] : false;
       assert.argumentTypes(query, EntityQuery, singleResult, $traceurRuntime.type.boolean);
       var results = this.entityManager.executeQueryLocally(query);
-      if (results.length) {
-        return singleResult ? results[0] : results;
-      }
-      return null;
+      return singleResult ? results[0] : results;
     },
     findResultsByQueryNEW: function(query) {
       var localFirst = arguments[1] !== (void 0) ? arguments[1] : true;

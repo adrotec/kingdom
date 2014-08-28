@@ -47,7 +47,9 @@ define(['plugins/router', './RouteBuilder', 'knockout', 'durandal/app'], functio
       return navs;
     },
     get title() {
-      return this.router.activeInstruction().config.title;
+      if (this.router.activeInstruction()) {
+        return this.router.activeInstruction().config.title;
+      }
     },
     findRouter: function(baseId) {
       if (baseId) {

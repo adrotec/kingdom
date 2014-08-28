@@ -43,7 +43,9 @@ export class Module {
   }
 
   get title(){
+    if(this.router.activeInstruction()){
       return this.router.activeInstruction().config.title;
+    }
   }
 
   findRouter(baseId){

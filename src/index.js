@@ -23,5 +23,6 @@ export {Storage} from './data/Storage';
 export {MessageBox} from './ui/MessageBox';
 export {Toast} from './ui/Toast';
 export {Dialog} from './ui/Dialog';
+export {Widget} from './ui/Widget';
 
 //export * from './ui/index';

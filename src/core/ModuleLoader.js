@@ -1,7 +1,11 @@
-import {Provide, Injector} from 'di';
+import {Provide, Injector, annotate, TransientScope} from 'di';
 import {Module} from './Module';
+import {Widget} from '../ui/Widget';
+import $ from 'jquery';
 
 var moduleInjector = new Injector();
+var widgetInjector = new Injector();
+var widgetsCache = new Map();
 
 var _allModules = [];
 
@@ -9,10 +13,27 @@ var isFunction = function(param){
   return param instanceof Function;
 }
 
-function _loadModule(module){
+function _loadModule(module, objectOnly = false){
   moduleInjector = moduleInjector.createChild(_allModules);
-  module = moduleInjector.get(module);
-  return module;
+  var moduleInstance = moduleInjector.get(module);
+  if(!objectOnly && moduleInstance instanceof Widget){
+//    if(widgetsCache.has(module)){
+//      return widgetsCache.get(module);
+//    }
+    var newInstance = $.extend(true, {}, moduleInstance);
+//    widgetsCache.set(module, newInstance);
+    return newInstance;
+//    annotate(module, new TransientScope);
+    return moduleInjector.get(module);
+    if(moduleInjector.providers.has(module)){
+      var provider = moduleInjector.providers.get(module);
+      var args = provider.params.map((param) => {
+        return moduleInjector.get(param.token);
+      });
+      return provider.create(args);
+    }
+  }
+  return moduleInstance;
 }
 
 export class ModuleLoader { 
@@ -22,9 +43,10 @@ export class ModuleLoader {
   }
 
   static registerProvider(Module, module){
-    module.annotations = [
-      new Provide(Module)
-    ];
+//    module.annotations = [
+//      new Provide(Module)
+//    ];
+    annotate(module, new Provide(Module));
     _allModules.push(module);
   }
 
@@ -79,4 +101,11 @@ export class ModuleLoader {
         }
     }
   }
+  static loadObject(obj) {
+    if(isFunction(obj)){
+      obj = _loadModule(obj, true);
+    }
+    return obj;
+  }
+
 }

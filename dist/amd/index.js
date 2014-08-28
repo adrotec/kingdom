@@ -1,4 +1,4 @@
-define(['./core/Module', './core/ModuleLoader', './core/RouteBuilder', './core/Application', './core/Observer', './core/ConfigInterface', './core/Filter', './security/AuthenticationProviderInterface', './security/Authenticator', './data/Entity', './data/DataService', './data/EntityInitializer', './data/Preloader', './data/Storage', './ui/MessageBox', './ui/Toast', './ui/Dialog'], function($__0,$__1,$__2,$__3,$__4,$__5,$__6,$__7,$__8,$__9,$__10,$__11,$__12,$__13,$__14,$__15,$__16) {
+define(['./core/Module', './core/ModuleLoader', './core/RouteBuilder', './core/Application', './core/Observer', './core/ConfigInterface', './core/Filter', './security/AuthenticationProviderInterface', './security/Authenticator', './data/Entity', './data/DataService', './data/EntityInitializer', './data/Preloader', './data/Storage', './ui/MessageBox', './ui/Toast', './ui/Dialog', './ui/Widget'], function($__0,$__1,$__2,$__3,$__4,$__5,$__6,$__7,$__8,$__9,$__10,$__11,$__12,$__13,$__14,$__15,$__16,$__17) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
     $__0 = {'default': $__0};
@@ -34,6 +34,8 @@ define(['./core/Module', './core/ModuleLoader', './core/RouteBuilder', './core/A
     $__15 = {'default': $__15};
   if (!$__16 || !$__16.__esModule)
     $__16 = {'default': $__16};
+  if (!$__17 || !$__17.__esModule)
+    $__17 = {'default': $__17};
   var $__core_47_Module__ = $__0;
   var $__core_47_ModuleLoader__ = $__1;
   var $__core_47_RouteBuilder__ = $__2;
@@ -51,6 +53,7 @@ define(['./core/Module', './core/ModuleLoader', './core/RouteBuilder', './core/A
   var $__ui_47_MessageBox__ = $__14;
   var $__ui_47_Toast__ = $__15;
   var $__ui_47_Dialog__ = $__16;
+  var $__ui_47_Widget__ = $__17;
   return {
     get Module() {
       return $__core_47_Module__.Module;
@@ -105,6 +108,9 @@ define(['./core/Module', './core/ModuleLoader', './core/RouteBuilder', './core/A
     },
     get Dialog() {
       return $__ui_47_Dialog__.Dialog;
+    },
+    get Widget() {
+      return $__ui_47_Widget__.Widget;
     },
     __esModule: true
   };

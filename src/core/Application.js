@@ -1,10 +1,12 @@
 import system from 'durandal/system';
+import binder from 'durandal/binder';
 import app from 'durandal/app';
 import {ModuleLoader} from './ModuleLoader';
 import {RouteBuilder} from './RouteBuilder';
 import ko from 'knockout';
 import koPunches from 'durandal-punches';
 import {Authenticator} from './../security/Authenticator';
+import {Widget} from '../ui/Widget';
 
 export class Application {
 
@@ -13,7 +15,7 @@ export class Application {
     this.config = {};
   }
 
-  enableAuthentication(){
+  enableAuthentication(){ 
     this.authenticator.guardRoutes();
   }
 
@@ -21,6 +23,14 @@ export class Application {
     system.debug(this.config.debug === true);
     system.resolveObject = ModuleLoader.load;
     system.setModuleId = ModuleLoader.setModuleId;
+    var originalBindContext = binder.bindContext;
+    binder.bindContextx = function(bindingContext, view, obj, dataAlias){
+//      obj = ModuleLoader.loadObject(obj);
+      if(obj instanceof Widget){
+        obj = ModuleLoader.load(obj.constructor);
+      }
+      return originalBindContext(bindingContext, view, obj, dataAlias);
+    }
     app.title = this.config.title || 'Kingdom Application';
     app.configurePlugins({
       router:true,
@@ -35,6 +45,7 @@ export class Application {
     this.init();
     this.bootstrap();
     return app.start().then(function() {
+      ko.bindingHandlers.viewPort = ko.bindingHandlers.routerViewPort = ko.bindingHandlers.router;
       app.setRoot(RouteBuilder.getRoutePrefix() + 'app', 'entrance');
     });
   }

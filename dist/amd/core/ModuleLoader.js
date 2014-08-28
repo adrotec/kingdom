@@ -1,22 +1,45 @@
-define(['di', './Module'], function($__0,$__1) {
+define(['di', './Module', '../ui/Widget', 'jquery'], function($__0,$__1,$__2,$__3) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
     $__0 = {'default': $__0};
   if (!$__1 || !$__1.__esModule)
     $__1 = {'default': $__1};
-  var $__3 = $traceurRuntime.assertObject($__0),
-      Provide = $__3.Provide,
-      Injector = $__3.Injector;
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {'default': $__2};
+  if (!$__3 || !$__3.__esModule)
+    $__3 = {'default': $__3};
+  var $__5 = $traceurRuntime.assertObject($__0),
+      Provide = $__5.Provide,
+      Injector = $__5.Injector,
+      annotate = $__5.annotate,
+      TransientScope = $__5.TransientScope;
   var Module = $traceurRuntime.assertObject($__1).Module;
+  var Widget = $traceurRuntime.assertObject($__2).Widget;
+  var $ = $traceurRuntime.assertObject($__3).default;
   var moduleInjector = new Injector();
+  var widgetInjector = new Injector();
+  var widgetsCache = new Map();
   var _allModules = [];
   var isFunction = function(param) {
     return param instanceof Function;
   };
   function _loadModule(module) {
+    var objectOnly = arguments[1] !== (void 0) ? arguments[1] : false;
     moduleInjector = moduleInjector.createChild(_allModules);
-    module = moduleInjector.get(module);
-    return module;
+    var moduleInstance = moduleInjector.get(module);
+    if (!objectOnly && moduleInstance instanceof Widget) {
+      var newInstance = $.extend(true, {}, moduleInstance);
+      return newInstance;
+      return moduleInjector.get(module);
+      if (moduleInjector.providers.has(module)) {
+        var provider = moduleInjector.providers.get(module);
+        var args = provider.params.map((function(param) {
+          return moduleInjector.get(param.token);
+        }));
+        return provider.create(args);
+      }
+    }
+    return moduleInstance;
   }
   var ModuleLoader = function ModuleLoader() {};
   var $ModuleLoader = ModuleLoader;
@@ -25,7 +48,7 @@ define(['di', './Module'], function($__0,$__1) {
       return moduleInjector;
     },
     registerProvider: function(Module, module) {
-      module.annotations = [new Provide(Module)];
+      annotate(module, new Provide(Module));
       _allModules.push(module);
     },
     load: function(module) {
@@ -65,6 +88,12 @@ define(['di', './Module'], function($__0,$__1) {
           return module;
         }
       }
+    },
+    loadObject: function(obj) {
+      if (isFunction(obj)) {
+        obj = _loadModule(obj, true);
+      }
+      return obj;
     }
   });
   return {

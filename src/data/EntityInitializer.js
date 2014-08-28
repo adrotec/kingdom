@@ -1,7 +1,9 @@
+import ko from 'knockout';
 import breeze from 'breeze';
 import {Deferred} from 'prophecy';
 import {Entity} from './Entity';
 import {DataService} from './DataService';
+import {Validator} from './Validator';
 
 var {EntityManager} = breeze;
 
@@ -9,8 +11,9 @@ var _initializedEntityTypesMap = {};
 
 export class EntityInitializer {
 
-  constructor(dataService: DataService){
+  constructor(dataService: DataService, validator: Validator){
     this.dataService = dataService;
+    this.validator = validator;
     this.entityManager = this.dataService.entityManager;
   }
 
@@ -42,10 +45,16 @@ export class EntityInitializer {
 
         var that = this; 
         var initializer = function(entity){
+          that.validator.addValidationForEntity(entity);
           if(entity.init){
             entity.init.apply(entity, [that.dataService]);
           }
           entity.dataService = that.dataService;
+          entity.__validationErrors = ko.observableArray();
+          entity.entityAspect.validationErrorsChanged.subscribe(function(){
+            entity.__validationErrors(entity.entityAspect.getValidationErrors());
+          });
+
           if(false){
             for(var prop in entity){
               if(typeof entity[prop] === "function"){
@@ -63,6 +72,5 @@ export class EntityInitializer {
     }
     window.setTimeout(()=> deferred.resolve(), 1);
     return deferred.promise;
-  }
-
+  } 
 }

@@ -38,7 +38,12 @@ export class DataService {
 
   findOne(from, criteria, options = {}){
     options.limit = 1;
+    var queryId = JSON.stringify({from, criteria, options});
     var query = sugar.createQuery(from, criteria, options);
+    if(options.expand && !_queriesFetched.get(queryId)){
+      options.localFirst = false;
+    }
+    _queriesFetched.set(queryId, query);
     return this.findResultsByQuery(query, options.localFirst !== false, true, true);
   }
 
@@ -108,12 +113,12 @@ export class DataService {
     var deferred = new Deferred();
     var results = [];
     if(localFirst){
-        results = this.getResults(query, singleResult);
-        if(results){
+        results = this.getResults(query, singleResult) || [];
+        if(results.length){
             deferred.resolve(resultsOnly ? results : {results});
         }
     }
-    if(!localFirst || !results){
+    if(!localFirst || !results.length){
         this.entityManager.executeQuery(query).then(function(data){
           if(data.inlineCount){
             data.results.count = data.inlineCount;

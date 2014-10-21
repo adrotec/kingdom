@@ -1,4 +1,4 @@
-define(['./Module', './ModuleLoader', './RouteBuilder', './Application', './Observer', './ConfigInterface'], function($__0,$__1,$__2,$__3,$__4,$__5) {
+define(['./Module', './ModuleLoader', './RouteBuilder', './Application', './Observer', './ConfigInterface', './Filter', './Deferred'], function($__0,$__1,$__2,$__3,$__4,$__5,$__6,$__7) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
     $__0 = {'default': $__0};
@@ -12,12 +12,18 @@ define(['./Module', './ModuleLoader', './RouteBuilder', './Application', './Obse
     $__4 = {'default': $__4};
   if (!$__5 || !$__5.__esModule)
     $__5 = {'default': $__5};
+  if (!$__6 || !$__6.__esModule)
+    $__6 = {'default': $__6};
+  if (!$__7 || !$__7.__esModule)
+    $__7 = {'default': $__7};
   var $__Module__ = $__0;
   var $__ModuleLoader__ = $__1;
   var $__RouteBuilder__ = $__2;
   var $__Application__ = $__3;
   var $__Observer__ = $__4;
   var $__ConfigInterface__ = $__5;
+  var $__Filter__ = $__6;
+  var $__Deferred__ = $__7;
   return {
     get Module() {
       return $__Module__.Module;
@@ -39,6 +45,12 @@ define(['./Module', './ModuleLoader', './RouteBuilder', './Application', './Obse
     },
     get ConfigInterface() {
       return $__ConfigInterface__.ConfigInterface;
+    },
+    get Filter() {
+      return $__Filter__.Filter;
+    },
+    get Deferred() {
+      return $__Deferred__.Deferred;
     },
     __esModule: true
   };

@@ -20,7 +20,7 @@ export class Preloader {
 
   importMetadata(data, fromCache = false) {
 
-    var metadata = typeof (data) === "string" ? JSON.parse(data) : data;
+    var metadata = data; //typeof (data) === "string" ? JSON.parse(data) : data;
 
     if (metadata) {
       try {
@@ -31,7 +31,6 @@ export class Preloader {
         //entityInitializer.initialize(self);
         _metadataFetched = true;
         return metadata;
-  //                        deferred.reject('Kannamoochc');
       } catch (e) {
   //                        error = new Error("Metadata import failed for " + url + "; Unable to process returned metadata:" + e.message);
         throw new Error('Metadata Import Failed: ' + e);

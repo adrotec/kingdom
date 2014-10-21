@@ -8,7 +8,6 @@ var cachedRouters = {};
 
 export class Module {
 
-
   showModal(moduleId, activationData){
     var idSplit = moduleId.split('/');
     idSplit.push('' + idSplit[idSplit.length-1]);
@@ -16,6 +15,10 @@ export class Module {
     moduleIdReal = this.__moduleBaseId__ + '/' + moduleIdReal;
     return app.showModal(moduleIdReal, activationData);
     // alert(moduleIdReal);
+  }
+  
+  showDialog(...params){
+    return this.showModal(...params);
   }
 
   get __moduleBaseId__(){

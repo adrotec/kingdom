@@ -1,7 +1,7 @@
-import {Config} from '../Config';
+import {ConfigInterface} from '../core/ConfigInterface';
 
 export class Logger {
-  constructor(config: Config){
+  constructor(config: ConfigInterface){
     this.config = config;
   }
   log(message){

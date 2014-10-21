@@ -5,7 +5,7 @@ export class MessageBox {
     return app.showMessage(...params);
   }
   showConfirm(...params){
-    return app.showConfirmMessage(...params);
+    return app.showConfirm(...params);
   }
 
   showNegative(...params){

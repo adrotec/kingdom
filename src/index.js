@@ -5,6 +5,7 @@ export {Application} from './core/Application';
 export {Observer} from './core/Observer';
 export {ConfigInterface} from './core/ConfigInterface';
 export {Filter} from './core/Filter';
+export {Deferred} from './core/Deferred';
 //export * from './core/index';
 
 export {AuthenticationProviderInterface} from './security/AuthenticationProviderInterface';
@@ -24,5 +25,7 @@ export {MessageBox} from './ui/MessageBox';
 export {Toast} from './ui/Toast';
 export {Dialog} from './ui/Dialog';
 export {Widget} from './ui/Widget';
+export {Router} from './ui/Router';
+export {Paginator} from './ui/Paginator';
 
 //export * from './ui/index';

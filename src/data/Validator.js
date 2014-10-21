@@ -1,5 +1,5 @@
 import {TextUtil} from '../util/TextUtil';
-import koValidation from 'knockoutValidation';
+//import koValidation from 'knockoutValidation';
 import observable from 'plugins/observable';
 
 export class Validator {

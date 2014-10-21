@@ -1,13 +1,13 @@
-define(["assert", '../Config'], function($__0,$__1) {
+define(["assert", '../core/ConfigInterface'], function($__0,$__1) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
     $__0 = {'default': $__0};
   if (!$__1 || !$__1.__esModule)
     $__1 = {'default': $__1};
   var assert = $traceurRuntime.assertObject($__0).assert;
-  var Config = $traceurRuntime.assertObject($__1).Config;
+  var ConfigInterface = $traceurRuntime.assertObject($__1).ConfigInterface;
   var Logger = function Logger(config) {
-    assert.argumentTypes(config, Config);
+    assert.argumentTypes(config, ConfigInterface);
     this.config = config;
   };
   ($traceurRuntime.createClass)(Logger, {
@@ -21,7 +21,7 @@ define(["assert", '../Config'], function($__0,$__1) {
       }
     }
   }, {});
-  Logger.parameters = [[Config]];
+  Logger.parameters = [[ConfigInterface]];
   return {
     get Logger() {
       return Logger;

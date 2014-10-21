@@ -17,7 +17,7 @@ define(['durandal/app'], function($__0) {
       for (var params = [],
           $__3 = 0; $__3 < arguments.length; $__3++)
         $traceurRuntime.setProperty(params, $__3, arguments[$traceurRuntime.toProperty($__3)]);
-      return ($__9 = app).showConfirmMessage.apply($__9, $traceurRuntime.toObject(params));
+      return ($__9 = app).showConfirm.apply($__9, $traceurRuntime.toObject(params));
     },
     showNegative: function() {
       var $__9;

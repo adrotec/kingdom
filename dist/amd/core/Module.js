@@ -22,6 +22,13 @@ define(['plugins/router', './RouteBuilder', 'knockout', 'durandal/app'], functio
       moduleIdReal = this.__moduleBaseId__ + '/' + moduleIdReal;
       return app.showModal(moduleIdReal, activationData);
     },
+    showDialog: function() {
+      var $__9;
+      for (var params = [],
+          $__7 = 0; $__7 < arguments.length; $__7++)
+        $traceurRuntime.setProperty(params, $__7, arguments[$traceurRuntime.toProperty($__7)]);
+      return ($__9 = this).showModal.apply($__9, $traceurRuntime.toObject(params));
+    },
     get __moduleBaseId__() {
       var idSplit = this.__moduleId__.split('/');
       if (idSplit.length > 1 && idSplit[$traceurRuntime.toProperty(idSplit.length - 1)] === idSplit[$traceurRuntime.toProperty(idSplit.length - 2)]) {

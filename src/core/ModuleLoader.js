@@ -16,7 +16,7 @@ var isFunction = function(param){
 function _loadModule(module, objectOnly = false){
   moduleInjector = moduleInjector.createChild(_allModules);
   var moduleInstance = moduleInjector.get(module);
-  if(!objectOnly && moduleInstance instanceof Widget){
+  if(false && !objectOnly && moduleInstance instanceof Widget){
 //    if(widgetsCache.has(module)){
 //      return widgetsCache.get(module);
 //    }
@@ -55,6 +55,9 @@ export class ModuleLoader {
   }
 
   static setModuleId(obj, id) {
+    if(!obj){
+      return; 
+    }
     if (obj.__esModule && obj['default']) {
       if (typeof obj['default'] == 'function' && obj['default'].prototype) {
         obj['default'].prototype.__moduleId__ = id;

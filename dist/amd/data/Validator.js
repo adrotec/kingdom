@@ -1,4 +1,4 @@
-define(["assert", '../util/TextUtil', 'knockoutValidation', 'plugins/observable'], function($__0,$__1,$__2,$__3) {
+define(["assert", '../util/TextUtil', 'plugins/observable'], function($__0,$__1,$__2) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
     $__0 = {'default': $__0};
@@ -6,12 +6,9 @@ define(["assert", '../util/TextUtil', 'knockoutValidation', 'plugins/observable'
     $__1 = {'default': $__1};
   if (!$__2 || !$__2.__esModule)
     $__2 = {'default': $__2};
-  if (!$__3 || !$__3.__esModule)
-    $__3 = {'default': $__3};
   var assert = $traceurRuntime.assertObject($__0).assert;
   var TextUtil = $traceurRuntime.assertObject($__1).TextUtil;
-  var koValidation = $traceurRuntime.assertObject($__2).default;
-  var observable = $traceurRuntime.assertObject($__3).default;
+  var observable = $traceurRuntime.assertObject($__2).default;
   var Validator = function Validator(textUtil) {
     assert.argumentTypes(textUtil, TextUtil);
     this.textUtil = textUtil;

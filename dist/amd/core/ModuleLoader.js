@@ -27,7 +27,7 @@ define(['di', './Module', '../ui/Widget', 'jquery'], function($__0,$__1,$__2,$__
     var objectOnly = arguments[1] !== (void 0) ? arguments[1] : false;
     moduleInjector = moduleInjector.createChild(_allModules);
     var moduleInstance = moduleInjector.get(module);
-    if (!objectOnly && moduleInstance instanceof Widget) {
+    if (false && !objectOnly && moduleInstance instanceof Widget) {
       var newInstance = $.extend(true, {}, moduleInstance);
       return newInstance;
       return moduleInjector.get(module);
@@ -55,6 +55,9 @@ define(['di', './Module', '../ui/Widget', 'jquery'], function($__0,$__1,$__2,$__
       return $ModuleLoader.loadModule(module);
     },
     setModuleId: function(obj, id) {
+      if (!obj) {
+        return;
+      }
       if (obj.__esModule && obj[$traceurRuntime.toProperty('default')]) {
         if (typeof obj[$traceurRuntime.toProperty('default')] == 'function' && obj[$traceurRuntime.toProperty('default')].prototype) {
           obj[$traceurRuntime.toProperty('default')].prototype.__moduleId__ = id;

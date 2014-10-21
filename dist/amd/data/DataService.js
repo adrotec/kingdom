@@ -23,12 +23,12 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
   var Storage = $traceurRuntime.assertObject($__6).Storage;
   breeze.config.initializeAdapterInstance('modelLibrary', 'koES5', true);
   var _queriesFetched = new Map();
-  var $__11 = $traceurRuntime.assertObject(breeze),
-      EntityManager = $__11.EntityManager,
-      EntityQuery = $__11.EntityQuery,
-      EntityState = $__11.EntityState,
-      Predicate = $__11.Predicate,
-      FetchStrategy = $__11.FetchStrategy;
+  var $__12 = $traceurRuntime.assertObject(breeze),
+      EntityManager = $__12.EntityManager,
+      EntityQuery = $__12.EntityQuery,
+      EntityState = $__12.EntityState,
+      Predicate = $__12.Predicate,
+      FetchStrategy = $__12.FetchStrategy;
   var DataService = function DataService(entityManager, storage) {
     assert.argumentTypes(entityManager, EntityManager, storage, Storage);
     this.entityManager = entityManager;
@@ -36,13 +36,14 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
   };
   ($traceurRuntime.createClass)(DataService, {
     find: function() {
-      var $__12;
+      var $__13;
       for (var params = [],
           $__9 = 0; $__9 < arguments.length; $__9++)
         $traceurRuntime.setProperty(params, $__9, arguments[$traceurRuntime.toProperty($__9)]);
-      return ($__12 = this).findAll.apply($__12, $traceurRuntime.toObject(params));
+      return ($__13 = this).findAll.apply($__13, $traceurRuntime.toObject(params));
     },
-    findAll: function(from, criteria) {
+    findAll: function(from) {
+      var criteria = arguments[1] !== (void 0) ? arguments[1] : {};
       var options = arguments[2] !== (void 0) ? arguments[2] : {};
       var queryId = JSON.stringify({
         from: from,
@@ -53,11 +54,21 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
       if (options.count) {
         query = query.inlineCount(true);
       }
+      var localFirst = options.localFirst;
       if (options.expand && !_queriesFetched.get(queryId)) {
-        options.localFirst = false;
+        localFirst = false;
       }
       _queriesFetched.set(queryId, query);
-      return this.findResultsByQuery(query, options.localFirst !== false, false, true);
+      console.log('QUERYID', queryId, localFirst);
+      if (localFirst !== false) {
+        var results = this.getAll(from, criteria, options);
+        if (results.length) {
+          return new Promise((function(resolve, reject) {
+            resolve(results);
+          }));
+        }
+      }
+      return this.findResultsByQuery(query, localFirst !== false, false, true);
     },
     findOne: function(from, criteria) {
       var options = arguments[2] !== (void 0) ? arguments[2] : {};
@@ -96,17 +107,21 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
       return this.entityManager.createEntity(entityTypeName, data);
     },
     create: function() {
-      var $__12;
+      var $__13;
       for (var params = [],
           $__10 = 0; $__10 < arguments.length; $__10++)
         $traceurRuntime.setProperty(params, $__10, arguments[$traceurRuntime.toProperty($__10)]);
-      return ($__12 = this).createEntity.apply($__12, $traceurRuntime.toObject(params));
+      return ($__13 = this).createEntity.apply($__13, $traceurRuntime.toObject(params));
     },
     getResults: function(query) {
       var singleResult = arguments[1] !== (void 0) ? arguments[1] : false;
       assert.argumentTypes(query, EntityQuery, singleResult, $traceurRuntime.type.boolean);
-      var results = this.entityManager.executeQueryLocally(query);
-      return singleResult ? results[0] : results;
+      try {
+        var results = this.entityManager.executeQueryLocally(query);
+        return singleResult ? results[0] : results;
+      } catch (e) {
+        return singleResult ? null : [];
+      }
     },
     findResultsByQueryNEW: function(query) {
       var localFirst = arguments[1] !== (void 0) ? arguments[1] : true;
@@ -180,6 +195,13 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
       if (entity.entityAspect) {
         entity.entityAspect.setDeleted();
       }
+    },
+    remove: function() {
+      var $__13;
+      for (var params = [],
+          $__11 = 0; $__11 < arguments.length; $__11++)
+        $traceurRuntime.setProperty(params, $__11, arguments[$traceurRuntime.toProperty($__11)]);
+      return ($__13 = this).removeEntity.apply($__13, $traceurRuntime.toObject(params));
     },
     saveChanges: function(entities) {
       if (entities) {

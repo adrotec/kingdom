@@ -23,17 +23,30 @@ export class DataService {
     return this.findAll(...params);
   }
 
-  findAll(from, criteria, options = {}){
+  findAll(from, criteria = {}, options = {}){
     var queryId = JSON.stringify({from, criteria, options});
+//    var queryId = JSON.stringify({from, criteria: Object.keys(criteria), options: Object.keys(options)});
     var query = sugar.createQuery(from, criteria, options);
     if(options.count){
       query = query.inlineCount(true);
     }
+    var localFirst = options.localFirst;
     if(options.expand && !_queriesFetched.get(queryId)){
-      options.localFirst = false;
+      localFirst = false;
     }
     _queriesFetched.set(queryId, query);
-    return this.findResultsByQuery(query, options.localFirst !== false, false, true);
+    
+    console.log('QUERYID', queryId, localFirst);
+    
+    if(localFirst !== false){
+      var results = this.getAll(from, criteria, options);
+      if(results.length){
+        return new Promise((resolve, reject)=> {
+          resolve(results);
+        });
+      }
+    }
+    return this.findResultsByQuery(query, localFirst !== false, false, true);
   }
 
   findOne(from, criteria, options = {}){
@@ -76,8 +89,14 @@ export class DataService {
   }
 
   getResults(query: EntityQuery, singleResult: boolean = false){
-    var results = this.entityManager.executeQueryLocally(query);
-    return singleResult ? results[0] : results;
+    try {
+      var results = this.entityManager.executeQueryLocally(query);
+      return singleResult ? results[0] : results;
+    }
+    catch(e){
+      // fail silently
+      return singleResult ? null : [];
+    }
   }
 
   findResultsByQueryNEW(query: EntityQuery, localFirst: boolean = true, singleResult: boolean = false): Promise {
@@ -149,6 +168,10 @@ export class DataService {
     if(entity.entityAspect){
       entity.entityAspect.setDeleted();
     }
+  }
+
+  remove(...params){
+    return this.removeEntity(...params); 
   }
 
   saveChanges(entities){

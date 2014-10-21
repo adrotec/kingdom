@@ -4,15 +4,20 @@ define(['plugins/observable'], function($__0) {
     $__0 = {'default': $__0};
   var observable = $traceurRuntime.assertObject($__0).default;
   var Observer = function Observer() {};
-  ($traceurRuntime.createClass)(Observer, {}, {observe: function(object, prop, fn) {
-      observable(object, prop).subscribe(function(newValue) {
+  ($traceurRuntime.createClass)(Observer, {}, {
+    observe: function(obj, prop, fn) {
+      observable(obj, prop).subscribe(function(newValue) {
         if (typeof fn === "function") {
-          fn.apply(object, [newValue]);
+          fn.apply(obj, [newValue]);
         } else {
-          object[$traceurRuntime.toProperty(fn)](newValue);
+          obj[$traceurRuntime.toProperty(fn)](newValue);
         }
       });
-    }});
+    },
+    getObservable: function(obj, prop) {
+      return observable(obj, prop);
+    }
+  });
   return {
     get Observer() {
       return Observer;

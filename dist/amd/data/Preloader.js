@@ -31,7 +31,7 @@ define(["assert", './DataService', 'prophecy', './Storage', '../util/Logger', 'p
   ($traceurRuntime.createClass)(Preloader, {
     importMetadata: function(data) {
       var fromCache = arguments[1] !== (void 0) ? arguments[1] : false;
-      var metadata = typeof(data) === "string" ? JSON.parse(data) : data;
+      var metadata = data;
       if (metadata) {
         try {
           if (!fromCache) {

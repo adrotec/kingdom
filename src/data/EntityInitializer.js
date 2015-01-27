@@ -1,6 +1,6 @@
 import ko from 'knockout';
 import breeze from 'breeze';
-import {Deferred} from 'prophecy';
+import {Deferred} from '../core/Deferred';
 import {Entity} from './Entity';
 import {DataService} from './DataService';
 import {Validator} from './Validator';

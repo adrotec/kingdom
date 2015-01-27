@@ -1,21 +1,21 @@
-define(['di', './Module', '../ui/Widget', 'jquery'], function($__0,$__1,$__2,$__3) {
+define(['di', './Module', '../ui/Widget', 'jquery'], function($__0,$__2,$__4,$__6) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
-    $__0 = {'default': $__0};
-  if (!$__1 || !$__1.__esModule)
-    $__1 = {'default': $__1};
+    $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
-    $__2 = {'default': $__2};
-  if (!$__3 || !$__3.__esModule)
-    $__3 = {'default': $__3};
-  var $__5 = $traceurRuntime.assertObject($__0),
-      Provide = $__5.Provide,
-      Injector = $__5.Injector,
-      annotate = $__5.annotate,
-      TransientScope = $__5.TransientScope;
-  var Module = $traceurRuntime.assertObject($__1).Module;
-  var Widget = $traceurRuntime.assertObject($__2).Widget;
-  var $ = $traceurRuntime.assertObject($__3).default;
+    $__2 = {default: $__2};
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  if (!$__6 || !$__6.__esModule)
+    $__6 = {default: $__6};
+  var $__1 = $__0,
+      Provide = $__1.Provide,
+      Injector = $__1.Injector,
+      annotate = $__1.annotate,
+      TransientScope = $__1.TransientScope;
+  var Module = $__2.Module;
+  var Widget = $__4.Widget;
+  var $ = $__6.default;
   var moduleInjector = new Injector();
   var widgetInjector = new Injector();
   var widgetsCache = new Map();
@@ -58,11 +58,11 @@ define(['di', './Module', '../ui/Widget', 'jquery'], function($__0,$__1,$__2,$__
       if (!obj) {
         return;
       }
-      if (obj.__esModule && obj[$traceurRuntime.toProperty('default')]) {
-        if (typeof obj[$traceurRuntime.toProperty('default')] == 'function' && obj[$traceurRuntime.toProperty('default')].prototype) {
-          obj[$traceurRuntime.toProperty('default')].prototype.__moduleId__ = id;
+      if (obj.__esModule && obj['default']) {
+        if (typeof obj['default'] == 'function' && obj['default'].prototype) {
+          obj['default'].prototype.__moduleId__ = id;
         } else {
-          obj[$traceurRuntime.toProperty('default')].__moduleId__ = id;
+          obj['default'].__moduleId__ = id;
         }
         return;
       }
@@ -80,8 +80,8 @@ define(['di', './Module', '../ui/Widget', 'jquery'], function($__0,$__1,$__2,$__
     },
     loadModule: function(module) {
       var moduleId = module.__moduleId__;
-      if (module.__esModule && module[$traceurRuntime.toProperty('default')]) {
-        module = module[$traceurRuntime.toProperty('default')];
+      if (module.__esModule && module['default']) {
+        module = module['default'];
       }
       if (false) {} else {
         if (isFunction(module)) {

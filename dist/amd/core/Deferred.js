@@ -1,13 +1,20 @@
-define(['prophecy'], function($__0) {
+define([], function() {
   "use strict";
-  if (!$__0 || !$__0.__esModule)
-    $__0 = {'default': $__0};
-  var DeferredBase = $traceurRuntime.assertObject($__0).Deferred;
   var Deferred = function Deferred() {
-    $traceurRuntime.defaultSuperCall(this, $Deferred.prototype, arguments);
+    var $__0 = this;
+    this.promise = new Promise((function(resolve, reject) {
+      $__0.resolve_ = resolve;
+      $__0.reject_ = reject;
+    }));
   };
-  var $Deferred = Deferred;
-  ($traceurRuntime.createClass)(Deferred, {}, {}, DeferredBase);
+  ($traceurRuntime.createClass)(Deferred, {
+    resolve: function(value) {
+      this.resolve_.call(this.promise, value);
+    },
+    reject: function(reason) {
+      this.reject_.call(this.promise, reason);
+    }
+  }, {});
   return {
     get Deferred() {
       return Deferred;

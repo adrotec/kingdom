@@ -1,6 +1,6 @@
 import breeze from 'breeze';
-import {Deferred} from 'prophecy';
-import sugar from 'breeze-sugar';
+import {Deferred} from '../core/Deferred';
+import sugar from 'breeze.sugar';
 import koES5 from 'breeze.koES5';
 import $ from 'jquery';
 import {Storage} from './Storage';
@@ -34,33 +34,50 @@ export class DataService {
     if(options.expand && !_queriesFetched.get(queryId)){
       localFirst = false;
     }
-    _queriesFetched.set(queryId, query);
+    _queriesFetched.set(queryId, true);
     
-    console.log('QUERYID', queryId, localFirst);
+    // console.log('QUERYID', queryId, localFirst);
     
+    var deferred = new Deferred();
+    
+    var findFromServer = true;
     if(localFirst !== false){
       var results = this.getAll(from, criteria, options);
       if(results.length){
-        return new Promise((resolve, reject)=> {
-          resolve(results);
-        });
+        deferred.resolve(results);
+        findFromServer = false;
       }
     }
-    return this.findResultsByQuery(query, localFirst !== false, false, true);
+    if(findFromServer) {
+      this.findResultsByQuery(query, false, false, true).then((results)=> {
+        if(localFirst === false){
+          deferred.resolve(results);
+        }
+        else {
+          deferred.resolve(this.getAll(from, criteria, options, results.count));
+        }
+      }, (error)=> {
+        deferred.reject(error);
+      });
+    }
+//    return this.findResultsByQuery(query, localFirst !== false, false, true);
+    return deferred.promise;
   }
 
   findOne(from, criteria, options = {}){
     options.limit = 1;
     var queryId = JSON.stringify({from, criteria, options});
+    var queryIdOne = 'ONE:' + queryId;
     var query = sugar.createQuery(from, criteria, options);
-    if(options.expand && !_queriesFetched.get(queryId)){
+    if(options.expand && (!_queriesFetched.get(queryId) || _queriesFetched.get(queryIdOne))){
       options.localFirst = false;
     }
-    _queriesFetched.set(queryId, query);
+    _queriesFetched.set(queryIdOne, query);
     return this.findResultsByQuery(query, options.localFirst !== false, true, true);
   }
 
-  getAll(from, criteria, options = {}){
+  getAll(from, criteria, options = {}, inlineCount = null){
+    var queryId = JSON.stringify({from, criteria, options});
     var query = sugar.createQuery(from, criteria, options);
     var results = this.getResults(query, false);
     if(options.count){
@@ -70,6 +87,9 @@ export class DataService {
       var countQuery = sugar.createQuery(from, criteria, countOptions);
       var allResults = this.getResults(countQuery, false);
       results.count = allResults.length;
+      if(inlineCount > results.count){
+        results.count = inlineCount;
+      }
     }
     return results;
   }
@@ -94,6 +114,8 @@ export class DataService {
       return singleResult ? results[0] : results;
     }
     catch(e){
+      console.log(e);
+      console.log(e.stack);
       // fail silently
       return singleResult ? null : [];
     }

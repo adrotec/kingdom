@@ -1,5 +1,5 @@
 import {DataService} from './DataService';
-import {Deferred} from 'prophecy';
+import {Deferred} from '../core/Deferred';
 import {Storage} from './Storage';
 import {Logger} from '../util/Logger';
 import router from 'plugins/router';

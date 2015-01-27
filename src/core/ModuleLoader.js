@@ -3,7 +3,7 @@ import {Module} from './Module';
 import {Widget} from '../ui/Widget';
 import $ from 'jquery';
 
-var moduleInjector = new Injector();
+var moduleInjector = new Injector(); 
 var widgetInjector = new Injector();
 var widgetsCache = new Map();
 

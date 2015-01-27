@@ -1,17 +1,17 @@
 define(['./MessageBox', './Toast', './Dialog', './Router', './Widget', './Paginator'], function($__0,$__1,$__2,$__3,$__4,$__5) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
-    $__0 = {'default': $__0};
+    $__0 = {default: $__0};
   if (!$__1 || !$__1.__esModule)
-    $__1 = {'default': $__1};
+    $__1 = {default: $__1};
   if (!$__2 || !$__2.__esModule)
-    $__2 = {'default': $__2};
+    $__2 = {default: $__2};
   if (!$__3 || !$__3.__esModule)
-    $__3 = {'default': $__3};
+    $__3 = {default: $__3};
   if (!$__4 || !$__4.__esModule)
-    $__4 = {'default': $__4};
+    $__4 = {default: $__4};
   if (!$__5 || !$__5.__esModule)
-    $__5 = {'default': $__5};
+    $__5 = {default: $__5};
   var $__MessageBox__ = $__0;
   var $__Toast__ = $__1;
   var $__Dialog__ = $__2;

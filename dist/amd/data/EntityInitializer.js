@@ -1,27 +1,27 @@
-define(["assert", 'knockout', 'breeze', 'prophecy', './Entity', './DataService', './Validator'], function($__0,$__1,$__2,$__3,$__4,$__5,$__6) {
+define(["assert", 'knockout', 'breeze', '../core/Deferred', './Entity', './DataService', './Validator'], function($__0,$__2,$__4,$__6,$__8,$__10,$__12) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
-    $__0 = {'default': $__0};
-  if (!$__1 || !$__1.__esModule)
-    $__1 = {'default': $__1};
+    $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
-    $__2 = {'default': $__2};
-  if (!$__3 || !$__3.__esModule)
-    $__3 = {'default': $__3};
+    $__2 = {default: $__2};
   if (!$__4 || !$__4.__esModule)
-    $__4 = {'default': $__4};
-  if (!$__5 || !$__5.__esModule)
-    $__5 = {'default': $__5};
+    $__4 = {default: $__4};
   if (!$__6 || !$__6.__esModule)
-    $__6 = {'default': $__6};
-  var assert = $traceurRuntime.assertObject($__0).assert;
-  var ko = $traceurRuntime.assertObject($__1).default;
-  var breeze = $traceurRuntime.assertObject($__2).default;
-  var Deferred = $traceurRuntime.assertObject($__3).Deferred;
-  var Entity = $traceurRuntime.assertObject($__4).Entity;
-  var DataService = $traceurRuntime.assertObject($__5).DataService;
-  var Validator = $traceurRuntime.assertObject($__6).Validator;
-  var EntityManager = $traceurRuntime.assertObject(breeze).EntityManager;
+    $__6 = {default: $__6};
+  if (!$__8 || !$__8.__esModule)
+    $__8 = {default: $__8};
+  if (!$__10 || !$__10.__esModule)
+    $__10 = {default: $__10};
+  if (!$__12 || !$__12.__esModule)
+    $__12 = {default: $__12};
+  var assert = $__0.assert;
+  var ko = $__2.default;
+  var breeze = $__4.default;
+  var Deferred = $__6.Deferred;
+  var Entity = $__8.Entity;
+  var DataService = $__10.DataService;
+  var Validator = $__12.Validator;
+  var EntityManager = breeze.EntityManager;
   var _initializedEntityTypesMap = {};
   var EntityInitializer = function EntityInitializer(dataService, validator) {
     assert.argumentTypes(dataService, DataService, validator, Validator);
@@ -31,10 +31,10 @@ define(["assert", 'knockout', 'breeze', 'prophecy', './Entity', './DataService',
   };
   ($traceurRuntime.createClass)(EntityInitializer, {
     initialize: function(entityTypeName, ctor, initializer) {
-      if (_initializedEntityTypesMap[$traceurRuntime.toProperty(entityTypeName)]) {
+      if (_initializedEntityTypesMap[entityTypeName]) {
         return false;
       }
-      $traceurRuntime.setProperty(_initializedEntityTypesMap, entityTypeName, true);
+      _initializedEntityTypesMap[entityTypeName] = true;
       return this.entityManager.metadataStore.registerEntityTypeCtor(entityTypeName, ctor, initializer);
     },
     ensureInitializers: function() {
@@ -42,12 +42,12 @@ define(["assert", 'knockout', 'breeze', 'prophecy', './Entity', './DataService',
       var deferred = new Deferred();
       var entityTypes = this.entityManager.metadataStore.getEntityTypes();
       for (var i in entityTypes) {
-        var shortName = entityTypes[$traceurRuntime.toProperty(i)].shortName;
-        if (_initializedEntityTypesMap[$traceurRuntime.toProperty(shortName)]) {
+        var shortName = entityTypes[i].shortName;
+        if (_initializedEntityTypesMap[shortName]) {
           continue;
         }
         if (entityTypes.hasOwnProperty(i)) {
-          var ctor = initializers[$traceurRuntime.toProperty(shortName)];
+          var ctor = initializers[shortName];
           if (!ctor) {
             ctor = new Function("return function " + shortName + "(){}")();
             ctor.prototype = new Entity();
@@ -65,10 +65,10 @@ define(["assert", 'knockout', 'breeze', 'prophecy', './Entity', './DataService',
             });
             if (false) {
               for (var prop in entity) {
-                if (typeof entity[$traceurRuntime.toProperty(prop)] === "function") {
+                if (typeof entity[prop] === "function") {
                   var matches = prop.match(/(.+?)Computed$/);
                   if (matches) {
-                    entity.defineProperty(matches[1], entity[$traceurRuntime.toProperty(prop)].bind(entity));
+                    entity.defineProperty(matches[1], entity[prop].bind(entity));
                   }
                 }
               }
@@ -83,7 +83,9 @@ define(["assert", 'knockout', 'breeze', 'prophecy', './Entity', './DataService',
       return deferred.promise;
     }
   }, {});
-  EntityInitializer.parameters = [[DataService], [Validator]];
+  Object.defineProperty(EntityInitializer, "parameters", {get: function() {
+      return [[DataService], [Validator]];
+    }});
   return {
     get EntityInitializer() {
       return EntityInitializer;

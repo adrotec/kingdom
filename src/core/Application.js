@@ -4,7 +4,7 @@ import app from 'durandal/app';
 import {ModuleLoader} from './ModuleLoader';
 import {RouteBuilder} from './RouteBuilder';
 import ko from 'knockout';
-import koPunches from 'kingdom-punches';
+//import koPunches from 'kingdom-punches';
 import {Authenticator} from './../security/Authenticator';
 import {Widget} from '../ui/Widget';
 
@@ -13,6 +13,11 @@ export class Application {
   constructor(authenticator: Authenticator){
     this.authenticator = authenticator;
     this.config = {};
+    this._root = 'app';
+  }
+  
+  setRoot(root){
+    this._root = root;
   }
 
   enableAuthentication(){ 
@@ -44,9 +49,9 @@ export class Application {
   run(){
     this.init();
     this.bootstrap();
-    return app.start().then(function() {
+    return app.start().then(()=> {
       ko.bindingHandlers.viewPort = ko.bindingHandlers.routerViewPort = ko.bindingHandlers.router;
-      app.setRoot(RouteBuilder.getRoutePrefix() + 'app', 'entrance');
+      app.setRoot(RouteBuilder.getRoutePrefix() + this._root, this.config.transition || 'entrance');
     });
   }
 }

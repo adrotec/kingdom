@@ -1,17 +1,17 @@
-define(["assert", './AuthenticationProviderInterface', 'prophecy', 'plugins/router'], function($__0,$__1,$__2,$__3) {
+define(["assert", './AuthenticationProviderInterface', '../core/Deferred', 'plugins/router'], function($__0,$__2,$__4,$__6) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
-    $__0 = {'default': $__0};
-  if (!$__1 || !$__1.__esModule)
-    $__1 = {'default': $__1};
+    $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
-    $__2 = {'default': $__2};
-  if (!$__3 || !$__3.__esModule)
-    $__3 = {'default': $__3};
-  var assert = $traceurRuntime.assertObject($__0).assert;
-  var AuthenticationProviderInterface = $traceurRuntime.assertObject($__1).AuthenticationProviderInterface;
-  var Deferred = $traceurRuntime.assertObject($__2).Deferred;
-  var router = $traceurRuntime.assertObject($__3).default;
+    $__2 = {default: $__2};
+  if (!$__4 || !$__4.__esModule)
+    $__4 = {default: $__4};
+  if (!$__6 || !$__6.__esModule)
+    $__6 = {default: $__6};
+  var assert = $__0.assert;
+  var AuthenticationProviderInterface = $__2.AuthenticationProviderInterface;
+  var Deferred = $__4.Deferred;
+  var router = $__6.default;
   var _isAuthenticated = false;
   var _routesGuarded = false;
   var _previousRoute = null;
@@ -118,7 +118,9 @@ define(["assert", './AuthenticationProviderInterface', 'prophecy', 'plugins/rout
       _routesGuarded = true;
     }
   }, {});
-  Authenticator.parameters = [[AuthenticationProviderInterface]];
+  Object.defineProperty(Authenticator, "parameters", {get: function() {
+      return [[AuthenticationProviderInterface]];
+    }});
   return {
     get Authenticator() {
       return Authenticator;

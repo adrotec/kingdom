@@ -6,14 +6,14 @@
     "di": "~2.0.0-pre-11"
   },
   "devDependencies": {
-    "traceur": "0.0.49",
+    "through2": "^0.6.1",
+    "traceur": "0.0.72",
     "karma": "~0.12.16",
     "karma-jasmine": "~0.1.5",
     "requirejs": "~2.1.14",
     "karma-requirejs": "~0.2.2",
     "karma-traceur-preprocessor": "~0.2.2",
-    "gulp": "~3.8.5",
-    "gulp-traceur": "~0.7.0"
+    "gulp": "~3.8.5"
   },
   "author": {
     "name": "Muhammad Safraz Razik",

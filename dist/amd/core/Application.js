@@ -1,41 +1,42 @@
-define(["assert", 'durandal/system', 'durandal/binder', 'durandal/app', './ModuleLoader', './RouteBuilder', 'knockout', 'kingdom-punches', './../security/Authenticator', '../ui/Widget'], function($__0,$__1,$__2,$__3,$__4,$__5,$__6,$__7,$__8,$__9) {
+define(["assert", 'durandal/system', 'durandal/binder', 'durandal/app', './ModuleLoader', './RouteBuilder', 'knockout', './../security/Authenticator', '../ui/Widget'], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14,$__16) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
-    $__0 = {'default': $__0};
-  if (!$__1 || !$__1.__esModule)
-    $__1 = {'default': $__1};
+    $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
-    $__2 = {'default': $__2};
-  if (!$__3 || !$__3.__esModule)
-    $__3 = {'default': $__3};
+    $__2 = {default: $__2};
   if (!$__4 || !$__4.__esModule)
-    $__4 = {'default': $__4};
-  if (!$__5 || !$__5.__esModule)
-    $__5 = {'default': $__5};
+    $__4 = {default: $__4};
   if (!$__6 || !$__6.__esModule)
-    $__6 = {'default': $__6};
-  if (!$__7 || !$__7.__esModule)
-    $__7 = {'default': $__7};
+    $__6 = {default: $__6};
   if (!$__8 || !$__8.__esModule)
-    $__8 = {'default': $__8};
-  if (!$__9 || !$__9.__esModule)
-    $__9 = {'default': $__9};
-  var assert = $traceurRuntime.assertObject($__0).assert;
-  var system = $traceurRuntime.assertObject($__1).default;
-  var binder = $traceurRuntime.assertObject($__2).default;
-  var app = $traceurRuntime.assertObject($__3).default;
-  var ModuleLoader = $traceurRuntime.assertObject($__4).ModuleLoader;
-  var RouteBuilder = $traceurRuntime.assertObject($__5).RouteBuilder;
-  var ko = $traceurRuntime.assertObject($__6).default;
-  var koPunches = $traceurRuntime.assertObject($__7).default;
-  var Authenticator = $traceurRuntime.assertObject($__8).Authenticator;
-  var Widget = $traceurRuntime.assertObject($__9).Widget;
+    $__8 = {default: $__8};
+  if (!$__10 || !$__10.__esModule)
+    $__10 = {default: $__10};
+  if (!$__12 || !$__12.__esModule)
+    $__12 = {default: $__12};
+  if (!$__14 || !$__14.__esModule)
+    $__14 = {default: $__14};
+  if (!$__16 || !$__16.__esModule)
+    $__16 = {default: $__16};
+  var assert = $__0.assert;
+  var system = $__2.default;
+  var binder = $__4.default;
+  var app = $__6.default;
+  var ModuleLoader = $__8.ModuleLoader;
+  var RouteBuilder = $__10.RouteBuilder;
+  var ko = $__12.default;
+  var Authenticator = $__14.Authenticator;
+  var Widget = $__16.Widget;
   var Application = function Application(authenticator) {
     assert.argumentTypes(authenticator, Authenticator);
     this.authenticator = authenticator;
     this.config = {};
+    this._root = 'app';
   };
   ($traceurRuntime.createClass)(Application, {
+    setRoot: function(root) {
+      this._root = root;
+    },
     enableAuthentication: function() {
       this.authenticator.guardRoutes();
     },
@@ -61,15 +62,18 @@ define(["assert", 'durandal/system', 'durandal/binder', 'durandal/app', './Modul
       ko.punches.enableAll();
     },
     run: function() {
+      var $__18 = this;
       this.init();
       this.bootstrap();
-      return app.start().then(function() {
+      return app.start().then((function() {
         ko.bindingHandlers.viewPort = ko.bindingHandlers.routerViewPort = ko.bindingHandlers.router;
-        app.setRoot(RouteBuilder.getRoutePrefix() + 'app', 'entrance');
-      });
+        app.setRoot(RouteBuilder.getRoutePrefix() + $__18._root, $__18.config.transition || 'entrance');
+      }));
     }
   }, {});
-  Application.parameters = [[Authenticator]];
+  Object.defineProperty(Application, "parameters", {get: function() {
+      return [[Authenticator]];
+    }});
   return {
     get Application() {
       return Application;

@@ -1,5 +1,5 @@
 import {AuthenticationProviderInterface} from './AuthenticationProviderInterface';
-import {Deferred} from 'prophecy';
+import {Deferred} from '../core/Deferred';
 import router from 'plugins/router';
 
 var _isAuthenticated = false;

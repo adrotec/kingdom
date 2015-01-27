@@ -1,34 +1,34 @@
-define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery', './Storage'], function($__0,$__1,$__2,$__3,$__4,$__5,$__6) {
+define(["assert", 'breeze', '../core/Deferred', 'breeze.sugar', 'breeze.koES5', 'jquery', './Storage'], function($__0,$__2,$__4,$__6,$__8,$__10,$__12) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
-    $__0 = {'default': $__0};
-  if (!$__1 || !$__1.__esModule)
-    $__1 = {'default': $__1};
+    $__0 = {default: $__0};
   if (!$__2 || !$__2.__esModule)
-    $__2 = {'default': $__2};
-  if (!$__3 || !$__3.__esModule)
-    $__3 = {'default': $__3};
+    $__2 = {default: $__2};
   if (!$__4 || !$__4.__esModule)
-    $__4 = {'default': $__4};
-  if (!$__5 || !$__5.__esModule)
-    $__5 = {'default': $__5};
+    $__4 = {default: $__4};
   if (!$__6 || !$__6.__esModule)
-    $__6 = {'default': $__6};
-  var assert = $traceurRuntime.assertObject($__0).assert;
-  var breeze = $traceurRuntime.assertObject($__1).default;
-  var Deferred = $traceurRuntime.assertObject($__2).Deferred;
-  var sugar = $traceurRuntime.assertObject($__3).default;
-  var koES5 = $traceurRuntime.assertObject($__4).default;
-  var $ = $traceurRuntime.assertObject($__5).default;
-  var Storage = $traceurRuntime.assertObject($__6).Storage;
+    $__6 = {default: $__6};
+  if (!$__8 || !$__8.__esModule)
+    $__8 = {default: $__8};
+  if (!$__10 || !$__10.__esModule)
+    $__10 = {default: $__10};
+  if (!$__12 || !$__12.__esModule)
+    $__12 = {default: $__12};
+  var assert = $__0.assert;
+  var breeze = $__2.default;
+  var Deferred = $__4.Deferred;
+  var sugar = $__6.default;
+  var koES5 = $__8.default;
+  var $ = $__10.default;
+  var Storage = $__12.Storage;
   breeze.config.initializeAdapterInstance('modelLibrary', 'koES5', true);
   var _queriesFetched = new Map();
-  var $__12 = $traceurRuntime.assertObject(breeze),
-      EntityManager = $__12.EntityManager,
-      EntityQuery = $__12.EntityQuery,
-      EntityState = $__12.EntityState,
-      Predicate = $__12.Predicate,
-      FetchStrategy = $__12.FetchStrategy;
+  var $__19 = breeze,
+      EntityManager = $__19.EntityManager,
+      EntityQuery = $__19.EntityQuery,
+      EntityState = $__19.EntityState,
+      Predicate = $__19.Predicate,
+      FetchStrategy = $__19.FetchStrategy;
   var DataService = function DataService(entityManager, storage) {
     assert.argumentTypes(entityManager, EntityManager, storage, Storage);
     this.entityManager = entityManager;
@@ -36,15 +36,16 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
   };
   ($traceurRuntime.createClass)(DataService, {
     find: function() {
-      var $__13;
+      var $__20;
       for (var params = [],
-          $__9 = 0; $__9 < arguments.length; $__9++)
-        $traceurRuntime.setProperty(params, $__9, arguments[$traceurRuntime.toProperty($__9)]);
-      return ($__13 = this).findAll.apply($__13, $traceurRuntime.toObject(params));
+          $__16 = 0; $__16 < arguments.length; $__16++)
+        params[$__16] = arguments[$__16];
+      return ($__20 = this).findAll.apply($__20, $traceurRuntime.spread(params));
     },
     findAll: function(from) {
       var criteria = arguments[1] !== (void 0) ? arguments[1] : {};
       var options = arguments[2] !== (void 0) ? arguments[2] : {};
+      var $__14 = this;
       var queryId = JSON.stringify({
         from: from,
         criteria: criteria,
@@ -58,17 +59,28 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
       if (options.expand && !_queriesFetched.get(queryId)) {
         localFirst = false;
       }
-      _queriesFetched.set(queryId, query);
-      console.log('QUERYID', queryId, localFirst);
+      _queriesFetched.set(queryId, true);
+      var deferred = new Deferred();
+      var findFromServer = true;
       if (localFirst !== false) {
         var results = this.getAll(from, criteria, options);
         if (results.length) {
-          return new Promise((function(resolve, reject) {
-            resolve(results);
-          }));
+          deferred.resolve(results);
+          findFromServer = false;
         }
       }
-      return this.findResultsByQuery(query, localFirst !== false, false, true);
+      if (findFromServer) {
+        this.findResultsByQuery(query, false, false, true).then((function(results) {
+          if (localFirst === false) {
+            deferred.resolve(results);
+          } else {
+            deferred.resolve($__14.getAll(from, criteria, options, results.count));
+          }
+        }), (function(error) {
+          deferred.reject(error);
+        }));
+      }
+      return deferred.promise;
     },
     findOne: function(from, criteria) {
       var options = arguments[2] !== (void 0) ? arguments[2] : {};
@@ -78,15 +90,22 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
         criteria: criteria,
         options: options
       });
+      var queryIdOne = 'ONE:' + queryId;
       var query = sugar.createQuery(from, criteria, options);
-      if (options.expand && !_queriesFetched.get(queryId)) {
+      if (options.expand && (!_queriesFetched.get(queryId) || _queriesFetched.get(queryIdOne))) {
         options.localFirst = false;
       }
-      _queriesFetched.set(queryId, query);
+      _queriesFetched.set(queryIdOne, query);
       return this.findResultsByQuery(query, options.localFirst !== false, true, true);
     },
     getAll: function(from, criteria) {
       var options = arguments[2] !== (void 0) ? arguments[2] : {};
+      var inlineCount = arguments[3] !== (void 0) ? arguments[3] : null;
+      var queryId = JSON.stringify({
+        from: from,
+        criteria: criteria,
+        options: options
+      });
       var query = sugar.createQuery(from, criteria, options);
       var results = this.getResults(query, false);
       if (options.count) {
@@ -94,6 +113,9 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
         var countQuery = sugar.createQuery(from, criteria, countOptions);
         var allResults = this.getResults(countQuery, false);
         results.count = allResults.length;
+        if (inlineCount > results.count) {
+          results.count = inlineCount;
+        }
       }
       return results;
     },
@@ -107,11 +129,11 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
       return this.entityManager.createEntity(entityTypeName, data);
     },
     create: function() {
-      var $__13;
+      var $__20;
       for (var params = [],
-          $__10 = 0; $__10 < arguments.length; $__10++)
-        $traceurRuntime.setProperty(params, $__10, arguments[$traceurRuntime.toProperty($__10)]);
-      return ($__13 = this).createEntity.apply($__13, $traceurRuntime.toObject(params));
+          $__17 = 0; $__17 < arguments.length; $__17++)
+        params[$__17] = arguments[$__17];
+      return ($__20 = this).createEntity.apply($__20, $traceurRuntime.spread(params));
     },
     getResults: function(query) {
       var singleResult = arguments[1] !== (void 0) ? arguments[1] : false;
@@ -120,13 +142,15 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
         var results = this.entityManager.executeQueryLocally(query);
         return singleResult ? results[0] : results;
       } catch (e) {
+        console.log(e);
+        console.log(e.stack);
         return singleResult ? null : [];
       }
     },
     findResultsByQueryNEW: function(query) {
       var localFirst = arguments[1] !== (void 0) ? arguments[1] : true;
       var singleResult = arguments[2] !== (void 0) ? arguments[2] : false;
-      var $__7 = this;
+      var $__14 = this;
       assert.argumentTypes(query, EntityQuery, localFirst, $traceurRuntime.type.boolean, singleResult, $traceurRuntime.type.boolean);
       var deferred = new Deferred();
       var executeServer = function() {
@@ -141,7 +165,7 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
           if (data.results.length) {
             deferred.resolve(singleResult ? data.results[0] : data.results);
           } else {
-            executeServer.apply($__7);
+            executeServer.apply($__14);
           }
         }), (function(error) {
           deferred.reject(error);
@@ -197,11 +221,11 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
       }
     },
     remove: function() {
-      var $__13;
+      var $__20;
       for (var params = [],
-          $__11 = 0; $__11 < arguments.length; $__11++)
-        $traceurRuntime.setProperty(params, $__11, arguments[$traceurRuntime.toProperty($__11)]);
-      return ($__13 = this).removeEntity.apply($__13, $traceurRuntime.toObject(params));
+          $__18 = 0; $__18 < arguments.length; $__18++)
+        params[$__18] = arguments[$__18];
+      return ($__20 = this).removeEntity.apply($__20, $traceurRuntime.spread(params));
     },
     saveChanges: function(entities) {
       if (entities) {
@@ -216,10 +240,18 @@ define(["assert", 'breeze', 'prophecy', 'breeze-sugar', 'breeze.koES5', 'jquery'
       return this.saveChanges(entities);
     }
   }, {});
-  DataService.parameters = [[EntityManager], [Storage]];
-  DataService.prototype.getResults.parameters = [[EntityQuery], [$traceurRuntime.type.boolean]];
-  DataService.prototype.findResultsByQueryNEW.parameters = [[EntityQuery], [$traceurRuntime.type.boolean], [$traceurRuntime.type.boolean]];
-  DataService.prototype.findResultsByQuery.parameters = [[EntityQuery], [$traceurRuntime.type.boolean], [$traceurRuntime.type.boolean], []];
+  Object.defineProperty(DataService, "parameters", {get: function() {
+      return [[EntityManager], [Storage]];
+    }});
+  Object.defineProperty(DataService.prototype.getResults, "parameters", {get: function() {
+      return [[EntityQuery], [$traceurRuntime.type.boolean]];
+    }});
+  Object.defineProperty(DataService.prototype.findResultsByQueryNEW, "parameters", {get: function() {
+      return [[EntityQuery], [$traceurRuntime.type.boolean], [$traceurRuntime.type.boolean]];
+    }});
+  Object.defineProperty(DataService.prototype.findResultsByQuery, "parameters", {get: function() {
+      return [[EntityQuery], [$traceurRuntime.type.boolean], [$traceurRuntime.type.boolean], []];
+    }});
   return {
     get DataService() {
       return DataService;

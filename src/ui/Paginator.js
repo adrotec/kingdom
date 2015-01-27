@@ -1,5 +1,6 @@
 import {DataService} from '../data/DataService';
 import {Observer} from '../core/Observer';
+import {Deferred} from '../core/Deferred';
 
 export class Paginator {
 
@@ -34,20 +35,32 @@ export class Paginator {
     if(!options.sort && this.defaultOptions.sort){
       options.sort = this.defaultOptions.sort;
     }
+    var deferred = new Deferred();
     this.dataService.findAll(this.entityType, this.criteria, options).then((results)=> {
-      if(options.count){
-        this.totalResults = results.count || 0;
-        this.totalPages = Math.ceil(this.totalResults/this.pageSize) || 1;
-      }
-      this.resultsFrom = (options.skip + 1);
-      this.resultsUntil = this.resultsFrom + (this.pageSize - 1);
-      if(this.resultsUntil > this.totalResults){
-        this.resultsUntil = this.totalResults;
-      }
-      console.log('Paginator', this);
-      this.callback(results);
-    });
+//      if(forceRefresh){
+//        this.fetchResults(false);
+//      }
+//      else {
+        this.processResults(results, options);
+        deferred.resolve();
+//      }
+    }, deferred.reject);
     this.options.localFirst = localFirstBackup;
+    return deferred.promise;
+  }
+  
+  processResults(results, options){
+    if(options.count){
+      this.totalResults = results.count || 0;
+      this.totalPages = Math.ceil(this.totalResults/this.pageSize) || 1;
+    }
+    this.resultsFrom = (options.skip + 1);
+    this.resultsUntil = this.resultsFrom + (this.pageSize - 1);
+    if(this.resultsUntil > this.totalResults){
+      this.resultsUntil = this.totalResults;
+    }
+    console.log('Paginator', this);
+    this.callback(results);
   }
 
   refresh(force = false){
@@ -57,9 +70,10 @@ export class Paginator {
     if(this.currentPage > this.totalPages){
       this.currentPage = this.totalPages;
     }
-    window.setTimeout(()=> {
-      this.fetchResults(force);
-    }, 1);
+    return this.fetchResults(force);
+//    window.setTimeout(()=> {
+//      this.fetchResults(force);
+//    }, 1);
   }
   
   forceRefresh(){

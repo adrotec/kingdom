@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var traceur = require('gulp-traceur');
+var gulpTraceur = require('./tools/transpiler/gulp-traceur');
 
 var path = {
   src: ['./src/**/*.js'],
@@ -17,7 +17,7 @@ var traceurOpts = {
 
 gulp.task('build_source', function() {
   gulp.src(path.src)
-    .pipe(traceur(traceurOpts))
+    .pipe(gulpTraceur(traceurOpts))
     .pipe(gulp.dest(path.output));
 });
 

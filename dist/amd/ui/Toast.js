@@ -1,33 +1,33 @@
-define(['durandal/app', 'toastr'], function($__0,$__1) {
+define(['durandal/app', 'toastr'], function($__0,$__2) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
-    $__0 = {'default': $__0};
-  if (!$__1 || !$__1.__esModule)
-    $__1 = {'default': $__1};
-  var app = $traceurRuntime.assertObject($__0).default;
-  var toastr = $traceurRuntime.assertObject($__1).default;
+    $__0 = {default: $__0};
+  if (!$__2 || !$__2.__esModule)
+    $__2 = {default: $__2};
+  var app = $__0.default;
+  var toastr = $__2.default;
   var Toast = function Toast() {};
   ($traceurRuntime.createClass)(Toast, {
     show: function() {
-      var $__7;
-      for (var params = [],
-          $__3 = 0; $__3 < arguments.length; $__3++)
-        $traceurRuntime.setProperty(params, $__3, arguments[$traceurRuntime.toProperty($__3)]);
-      ($__7 = toastr).info.apply($__7, $traceurRuntime.toObject(params));
-    },
-    showPositive: function() {
-      var $__7;
-      for (var params = [],
-          $__4 = 0; $__4 < arguments.length; $__4++)
-        $traceurRuntime.setProperty(params, $__4, arguments[$traceurRuntime.toProperty($__4)]);
-      return ($__7 = toastr).success.apply($__7, $traceurRuntime.toObject(params));
-    },
-    showNegative: function() {
-      var $__7;
+      var $__8;
       for (var params = [],
           $__5 = 0; $__5 < arguments.length; $__5++)
-        $traceurRuntime.setProperty(params, $__5, arguments[$traceurRuntime.toProperty($__5)]);
-      return ($__7 = toastr).error.apply($__7, $traceurRuntime.toObject(params));
+        params[$__5] = arguments[$__5];
+      ($__8 = toastr).info.apply($__8, $traceurRuntime.spread(params));
+    },
+    showPositive: function() {
+      var $__8;
+      for (var params = [],
+          $__6 = 0; $__6 < arguments.length; $__6++)
+        params[$__6] = arguments[$__6];
+      return ($__8 = toastr).success.apply($__8, $traceurRuntime.spread(params));
+    },
+    showNegative: function() {
+      var $__8;
+      for (var params = [],
+          $__7 = 0; $__7 < arguments.length; $__7++)
+        params[$__7] = arguments[$__7];
+      return ($__8 = toastr).error.apply($__8, $traceurRuntime.spread(params));
     }
   }, {});
   return {

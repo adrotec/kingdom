@@ -1,8 +1,8 @@
 define(['plugins/observable'], function($__0) {
   "use strict";
   if (!$__0 || !$__0.__esModule)
-    $__0 = {'default': $__0};
-  var observable = $traceurRuntime.assertObject($__0).default;
+    $__0 = {default: $__0};
+  var observable = $__0.default;
   var Observer = function Observer() {};
   ($traceurRuntime.createClass)(Observer, {}, {
     observe: function(obj, prop, fn) {
@@ -10,7 +10,7 @@ define(['plugins/observable'], function($__0) {
         if (typeof fn === "function") {
           fn.apply(obj, [newValue]);
         } else {
-          obj[$traceurRuntime.toProperty(fn)](newValue);
+          obj[fn](newValue);
         }
       });
     },
